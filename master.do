@@ -32,6 +32,11 @@ label define trends 1 "↑" 2 "➚" 3 "→" 4 "↓"
 recast int headroom, force
 label values headroom trends
 
+// Clone the variables to test that formatting still works in the later
+// columns as well
+clonevar more_ratings = rep78
+clonevar more_trends = headroom
+
 *-------------------------------------------------------------------------------
 * Make a copy of the pre-formatted Excel template (so that we leave the
 * original template intact)
