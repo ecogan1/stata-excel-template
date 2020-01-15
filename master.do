@@ -49,12 +49,21 @@ copy template.xlsx sdgindex.xlsx, replace
 * template. "Normal" formatting is lost.
 * There is a way to keep "normal" formatting for cells that have text in the
 * template, by using the sheetmodify and keepcellfmt options. However, that is
-* not super useful, so we instead use the sheetreplace option here.
+* not super useful, so we instead use the sheetreplace option here and then
+* use Stata's excelput to bold and slant the header row.
 *-------------------------------------------------------------------------------
 export excel sdgindex.xlsx,           /// write to our copy of the template
              sheetreplace             /// keep only conditional formatting
              firstrow(varlabels)      /// write variable labels
              sheet("Overall Results") //  the sheet to write to
+
+// Format the header row
+putexcel set sdgindex.xlsx, modify sheet("Overall Results")
+putexcel (A1:ZZ1),                    /// target the entire first row
+         overwritefmt                 /// remove any existing formatting
+         bold                         /// bold the header row
+         txtrotate(45)                //  angle/slant the text
+putexcel clear
 
 // Write data to another sheet of our copy of the template. This is just for
 // demo purposes to show that formatting is indeed retained for the various
@@ -63,3 +72,11 @@ export excel sdgindex.xlsx,           /// write to our copy of the template
              sheetreplace             /// keep only conditional formatting
              firstrow(varlabels)      /// write variable labels
              sheet("Values, Ratings, Trends") //  the sheet to write to
+
+// Format the header row
+putexcel set sdgindex.xlsx, modify sheet("Values, Ratings, Trends")
+putexcel (A1:ZZ1),                    /// target the entire first row
+         overwritefmt                 /// remove any existing formatting
+         bold                         /// bold the header row
+         txtrotate(45)                // angle/slant the text
+putexcel clear
