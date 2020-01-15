@@ -45,21 +45,21 @@ copy template.xlsx sdgindex.xlsx, replace
 
 *-------------------------------------------------------------------------------
 * Write data to our copy of the template.
-* We must use sheetmodify in combination with keepcellfmt. Otherwise, we would
-* only retain conditional formatting and "normal", unconditional formatting
-* (such as bold, underline, angled) would be lost.
+* Unfortunately, we can only retain the conditional formatting applied to the
+* template. "Normal" formatting is lost.
+* There is a way to keep "normal" formatting for cells that have text in the
+* template, by using the sheetmodify and keepcellfmt options. However, that is
+* not super useful, so we instead use the sheetreplace option here.
 *-------------------------------------------------------------------------------
 export excel sdgindex.xlsx,           /// write to our copy of the template
-             sheetmodify              /// keep all formatting
-             keepcellfmt              /// keep all formatting
+             sheetreplace             /// keep only conditional formatting
              firstrow(varlabels)      /// write variable labels
              sheet("Overall Results") //  the sheet to write to
 
 // Write data to another sheet of our copy of the template. This is just for
 // demo purposes to show that formatting is indeed retained for the various
 // sheets.
-export excel sdgindex.xlsx,               /// write to our copy of the template
-             sheetmodify                      /// keep all formatting
-             keepcellfmt                      /// keep all formatting
-             firstrow(varlabels)              /// write variable labels
+export excel sdgindex.xlsx,           /// write to our copy of the template
+             sheetreplace             /// keep only conditional formatting
+             firstrow(varlabels)      /// write variable labels
              sheet("Values, Ratings, Trends") //  the sheet to write to
